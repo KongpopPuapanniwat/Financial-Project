@@ -2,6 +2,8 @@ import tkinter as tk
 import tkinter.font as tkFont
 import pandas as pd
 import all_def
+import numpy as np
+import matplotlib.pyplot as plt
 
 class App:
     def __init__(self,root):
@@ -145,7 +147,7 @@ class App:
 
         self.GLabel_692 = tk.Label(root)                                 # Text file sub-C
         self.GLabel_692["bg"] = "#c71585"
-        ft = tkFont.Font(family='Times', size=18)
+        ft = tkFont.Font(family='Times', size=16)
         self.GLabel_692["font"] = ft
         self.GLabel_692["fg"] = "#333333"
         self.GLabel_692["justify"] = "center"
@@ -169,9 +171,9 @@ class App:
         self.cut_off_var["justify"] = "center"
         self.cut_off_var.place(x=260, y=160, width=74, height=30)
 
-        self.GLabel_987 = tk.Label(root)  # text file cut-off
+        self.GLabel_987 = tk.Label(root)                                    # text file cut-off
         self.GLabel_987["bg"] = "#90ee90"
-        ft = tkFont.Font(family='Times', size=17)
+        ft = tkFont.Font(family='Times', size=15)
         self.GLabel_987["font"] = ft
         self.GLabel_987["fg"] = "#333333"
         self.GLabel_987["justify"] = "center"
@@ -278,7 +280,6 @@ class App:
         for x in self.file:
             for y in x.split():
                 self.list_maxscore.append(int(y))
-        print(self.list_maxscore)
 
 
         self.credit_buro_score = (self.list_maxscore[0] / 100) * self.maxscore_character
@@ -309,9 +310,10 @@ class App:
 
 
         self.df = pd.read_csv(self.list[7], encoding='TIS-620')
-        print(self.df)
+        found = 'N'
         for y in range(len(self.df.index)):
             if self.username == self.df.loc[y].Username:
+                found = 'Y'
                 self.user_count_repayment = all_def.repayment(self.credit_buro_score, self.df.loc[y].repayment_history)
                 self.user_count_region = all_def.region(self.region_score, self.df.loc[y].region_info)
                 self.user_count_job = all_def.job(self.job_score, self.df.loc[y].job_info)
@@ -332,15 +334,45 @@ class App:
                 self.sum_collateral = self.user_count_collateral
                 self.sum_condition = self.user_count_condition
 
-                print('sum_character:', self.sum_character)
-                print('sum_capability:', self.sum_capability)
-                print('sum_capital:', self.sum_capital)
-                print('sum_collateral:', self.sum_collateral)
-                print('sum_condition:', self.sum_condition)
+                self.file_cut_off = open(self.list[6], 'r')  # Input เป็น Percent
+                self.list_cutoff_point = []
+                for x in self.file_cut_off:
+                    for y in x.split():
+                        self.list_cutoff_point.append(int(y))
+                self.haracter_cutoffpoint = (self.list_cutoff_point[0] / 100) * self.maxscore_character
+                self.capability_cutoffpoint = (self.list_cutoff_point[1] / 100) * self.maxscore_capability
+                self.capital_cutoffpoint = (self.list_cutoff_point[2] / 100) *self.maxscore_capital
+                self.collateral_cutoffpoint = (self.list_cutoff_point[3] / 100) * self.maxscore_collateral
+                self.condition_cutoffpoint = (self.list_cutoff_point[4] / 100) * self.maxscore_condition
+                self.all_cutoffpoint = (self.list_cutoff_point[5] / 100) * 1000
 
-            else:
-                print('Username = ',self.df.loc[y].Username)
-                print('self.username = ',self.username)
+                ### Graph from 100 Percent of each c and score that user get
+                # convert each C to percent
+                self.percent_character = (self.sum_character / self.maxscore_character) * 100
+                self.percent_capability = (self.sum_capability /self.maxscore_capability) * 100
+                self.percent_capital = (self.sum_capital / self.maxscore_capital) * 100
+                self.percent_collateral = (self.sum_collateral / self.maxscore_collateral) * 100
+                self.percent_condition = (self.sum_condition / self.maxscore_condition) * 100
+                all_c = ['Character', 'Capability', 'Capital', 'Collateral', 'Condition']
+                all_c = [*all_c, all_c[0]]
+                user_1 = [self.percent_character,self.percent_capability,self.percent_capital,self.percent_collateral,self.percent_condition]
+                user_1 = [*user_1, user_1[0]]
+                angle = np.linspace(start=0, stop=2 * np.pi, num=len(user_1))  # 2*np.pi=circle  num=5C
+                fig = plt.figure(figsize=(6, 6))  # ขนาดgraph
+                ax = fig.add_subplot(polar=True)
+                ax.plot(angle, user_1, 'o-', color='g', label='user_1')
+                ax.fill(angle, user_1, alpha=0.25, color='g')
+                ax.set_thetagrids(angle * 180 / np.pi, all_c)
+                plt.title('User overview graph ', size=20, y=1.05)  # หัวข้อกราฟ
+                lines, labels = plt.thetagrids(np.degrees(angle), labels=all_c)
+                plt.grid(True)
+                plt.tight_layout()
+                plt.legend()  #
+                plt.show()
+
+        if found == 'N':
+             print('No username')
+
 
 if __name__ == "__main__":
     root = tk.Tk()
