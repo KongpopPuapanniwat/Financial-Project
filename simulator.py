@@ -21,6 +21,156 @@ class App:
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         loan.geometry(alignstr)
         loan.resizable(width=False, height=False)
+        character = character_var.get()
+        capability = capability_var.get()
+        capital = capital_var.get()
+        collateral = collateral_var.get()
+        condition = condition_var.get()
+        text_file_sub_c = sub_c_var.get()
+        text_file_cut_off = cut_off_var.get()
+        csv_loan_info = loan_info_var.get()
+        username = username_var.get()
+
+        list.append(character)
+        list.append(capability)
+        list.append(capital)
+        list.append(collateral)
+        list.append(condition)
+        list.append(text_file_sub_c)
+        list.append(text_file_cut_off)
+        list.append(csv_loan_info)
+        list.append(username)
+
+
+        character = list[0]
+        capability = list[1]
+        capital = list[2]
+        collateral = list[3]
+        condition = list[4]
+
+        maxscore_character = int(character) * 10
+        maxscore_capability = int(capability) * 10
+        maxscore_capital = int(capital) * 10
+        maxscore_collateral = int(collateral) * 10
+        maxscore_condition = int(condition) * 10
+
+        # print('maxscore_character:', maxscore_character)
+        # print('maxscore_capability:', maxscore_capability)
+        # print('maxscore_capital:', maxscore_capital)
+        # print('maxscore_collateral:', maxscore_collateral)
+        # print('maxscore_condition', maxscore_condition)
+
+        file = open(list[5], 'r')  # Input proportion of sub-C
+        list_maxscore = []
+        for x in file:
+            for y in x.split():
+                list_maxscore.append(int(y))
+
+
+        credit_buro_score = (list_maxscore[0] / 100) * maxscore_character
+        region_score = (list_maxscore[1] / 100) * maxscore_character
+        job_score = (list_maxscore[2] / 100) * maxscore_character
+        social_status_score = (list_maxscore[3] / 100) * maxscore_character
+        income_score = (list_maxscore[4] / 100) * maxscore_capability
+        health_score = (list_maxscore[5] / 100) * maxscore_capability
+        job_stability_score = (list_maxscore[6] / 100) * maxscore_capability
+        having_debt_score = (list_maxscore[7] / 100) * maxscore_capability
+        other_debt_score = (list_maxscore[8] / 100) * maxscore_capability
+        capital_score = (list_maxscore[9] / 100) * maxscore_capital
+        asset_score = (list_maxscore[10] / 100) * maxscore_capital
+
+        # print('credit_buro_score:',credit_buro_score)
+        # print('region_score:',region_score)
+        # print('job_score:',job_score)
+        # print('social_status_score:',social_status_score)
+        # print('income_score:',income_score)
+        # print('health_score:',health_score)
+        # print('job_stability_score:',job_stability_score)
+        # print('having_debt_score:',having_debt_score)
+        # print('other_debt_score:',other_debt_score)
+        # print('capital_score:',capital_score)
+        # print('asset_score:',asset_score)
+        # print('maxscore_collateral:',maxscore_collateral)
+        # print('maxscore_condition:',maxscore_condition)
+
+        df = pd.read_csv(list[7], encoding='TIS-620')
+        found = 'N'
+        for y in range(len(df.index)):
+            if username == df.loc[y].Username:
+                found = 'Y'
+                user_count_repayment = all_def.repayment(credit_buro_score, df.loc[y].repayment_history)
+                user_count_region = all_def.region(region_score, df.loc[y].region_info)
+                user_count_job = all_def.job(job_score, df.loc[y].job_info)
+                user_count_social = all_def.social(social_status_score, df.loc[y].social_status)
+                user_count_income = all_def.income(income_score, df.loc[y].revenue, df.loc[y].loan, df.loc[y].rate, df.loc[y].year)
+                user_count_health = all_def.health(health_score, df.loc[y].health_info)
+                user_count_job_stability = all_def.job_stability(job_stability_score, df.loc[y].job_year)
+                user_count_having_debt = all_def.having_debt(having_debt_score, df.loc[y].pay_other_debt, df.loc[y].revenue)
+                user_count_other_debt = all_def.other_debt(other_debt_score, df.loc[y].debt, df.loc[y].asset)
+                user_count_capital_structure = all_def.capital_structure(capital_score, df.loc[y].asset, df.loc[y].debt)
+                user_count_percent_asset = all_def.percent_asset(asset_score, df.loc[y].asset,df.loc[y].loan)
+                user_count_collateral = all_def.collateral(maxscore_collateral, df.loc[y].collateral_asset, df.loc[y].loan,df.loc[y].liquidity_collateral)
+                user_count_condition = all_def.condition(maxscore_condition, df.loc[y].percent_inflation, df.loc[y].job_info)
+
+                sum_character = user_count_repayment + user_count_region + user_count_job + user_count_social
+                sum_capability = user_count_income + user_count_health + user_count_job_stability + user_count_having_debt + user_count_other_debt
+                sum_capital = user_count_capital_structure + user_count_percent_asset
+                sum_collateral = user_count_collateral
+                sum_condition = user_count_condition
+
+                # print(sum_character)
+                # print(sum_capability)
+                # print(sum_capital)
+                # print(sum_collateral)
+                # print(sum_condition)
+
+
+        file_cut_off = open(list[6], 'r')  # Input เป็น Percent
+        list_cutoff_point = []
+        for x in file_cut_off:
+            for y in x.split():
+                list_cutoff_point.append(int(y))
+        haracter_cutoffpoint = (list_cutoff_point[0] / 100) * maxscore_character
+        capability_cutoffpoint = (list_cutoff_point[1] / 100) * maxscore_capability
+        capital_cutoffpoint = (list_cutoff_point[2] / 100) *maxscore_capital
+        collateral_cutoffpoint = (list_cutoff_point[3] / 100) * maxscore_collateral
+        condition_cutoffpoint = (list_cutoff_point[4] / 100) * maxscore_condition
+        all_cutoffpoint = (list_cutoff_point[5] / 100) * 1000
+
+
+
+
+        ### Graph from 100 Percent of each c and score that user get
+        # convert each C to percent
+        percent_character = (sum_character / maxscore_character) * 100
+        percent_capability = (sum_capability /maxscore_capability) * 100
+        percent_capital = (sum_capital / maxscore_capital) * 100
+        percent_collateral = (sum_collateral / maxscore_collateral) * 100
+        percent_condition = (sum_condition / maxscore_condition) * 100
+        all_c = ['Character', 'Capability', 'Capital', 'Collateral', 'Condition']
+        all_c = [*all_c, all_c[0]]
+        user_1 = [percent_character,percent_capability,percent_capital,percent_collateral,percent_condition]
+        user_1 = [*user_1, user_1[0]]
+        angle = np.linspace(start=0, stop=2 * np.pi, num=len(user_1))  # 2*np.pi=circle  num=5C
+        fig = plt.figure(figsize=(6, 6))  # ขนาดgraph
+        ax = fig.add_subplot(polar=True)
+        ax.plot(angle, user_1, 'o-', color='g', label='user_1')
+        ax.fill(angle, user_1, alpha=0.25, color='g')
+        ax.set_thetagrids(angle * 180 / np.pi, all_c)
+        plt.title('User overview graph ', size=20, y=1.05)  # หัวข้อกราฟ
+        lines, labels = plt.thetagrids(np.degrees(angle), labels=all_c)
+        plt.grid(True)
+        plt.tight_layout()
+        plt.legend()  #
+        plt.show()
+
+        if found == 'N':
+            print('No username')
+
+
+
+        ### GUI page 2
+        ### ### ###
 
         user_score = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=30)
@@ -30,13 +180,21 @@ class App:
         user_score["text"] = "User Score "
         user_score.place(x=10, y=0, width=192, height=42)
 
+        max_score = tk.Label(loan)
+        ft = tkFont.Font(family='Times', size=33)
+        max_score["font"] = ft
+        max_score["fg"] = "#333333"
+        max_score["justify"] = "center"
+        max_score["text"] = "Max score"
+        max_score.place(x=350, y=10, width=210, height=30)
+
         user_carac = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=15)
         user_carac["font"] = ft
         user_carac["fg"] = "#333333"
-        user_carac["justify"] = "center"
-        user_carac["text"] = "sum_character"
-        user_carac.place(x=230, y=50, width=89, height=41)
+        user_carac["justify"] = "right"
+        user_carac["text"] = sum_character
+        user_carac.place(x=200, y=50, width=89, height=41)
 
         carac = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=20)
@@ -58,15 +216,15 @@ class App:
         ft = tkFont.Font(family='Times', size=15)
         user_capab["font"] = ft
         user_capab["fg"] = "#333333"
-        user_capab["justify"] = "center"
-        user_capab["text"] = "sum_capability"
-        user_capab.place(x=190, y=80, width=173, height=30)
+        user_capab["justify"] = "right"
+        user_capab["text"] = sum_capability
+        user_capab.place(x=160, y=80, width=173, height=30)
 
         capi = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=20)
         capi["font"] = ft
         capi["fg"] = "#333333"
-        capi["justify"] = "center"
+        capi["justify"] = "right"
         capi["text"] = "Capital :"
         capi.place(x=50, y=110, width=141, height=30)
 
@@ -74,9 +232,9 @@ class App:
         ft = tkFont.Font(family='Times', size=15)
         user_capi["font"] = ft
         user_capi["fg"] = "#333333"
-        user_capi["justify"] = "center"
-        user_capi["text"] = "sum_capital"
-        user_capi.place(x=180, y=110, width=145, height=30)
+        user_capi["justify"] = "right"
+        user_capi["text"] = sum_capital
+        user_capi.place(x=175, y=110, width=145, height=30)
 
         coll = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=20)
@@ -90,9 +248,9 @@ class App:
         ft = tkFont.Font(family='Times', size=15)
         user_coll["font"] = ft
         user_coll["fg"] = "#333333"
-        user_coll["justify"] = "center"
-        user_coll["text"] = "sum_collateral"
-        user_coll.place(x=190, y=140, width=153, height=30)
+        user_coll["justify"] = "right"
+        user_coll["text"] = sum_collateral
+        user_coll.place(x=170, y=140, width=153, height=30)
 
         condi = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=20)
@@ -106,49 +264,49 @@ class App:
         ft = tkFont.Font(family='Times', size=15)
         user_condi["font"] = ft
         user_condi["fg"] = "#333333"
-        user_condi["justify"] = "center"
-        user_condi["text"] = "sum_condition"
-        user_condi.place(x=190, y=170, width=142, height=30)
+        user_condi["justify"] = "right"
+        user_condi["text"] = sum_condition
+        user_condi.place(x=170, y=170, width=142, height=30)
 
         max_charac = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=18)
         max_charac["font"] = ft
         max_charac["fg"] = "#333333"
         max_charac["justify"] = "center"
-        max_charac["text"] = "max_character"
-        max_charac.place(x=390, y=50, width=172, height=37)
+        max_charac["text"] = maxscore_character  ### เลือกระหว่างmax score กับ cutoff point ###
+        max_charac.place(x=360, y=50, width=172, height=37)
 
         max_capa = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=18)
         max_capa["font"] = ft
         max_capa["fg"] = "#333333"
         max_capa["justify"] = "center"
-        max_capa["text"] = "max_capability"
-        max_capa.place(x=390, y=80, width=169, height=30)
+        max_capa["text"] = maxscore_capability
+        max_capa.place(x=360, y=80, width=169, height=30)
 
         max_capi = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=18)
         max_capi["font"] = ft
         max_capi["fg"] = "#333333"
         max_capi["justify"] = "center"
-        max_capi["text"] = "max_capital"
-        max_capi.place(x=390, y=110, width=137, height=30)
+        max_capi["text"] = maxscore_capital
+        max_capi.place(x=375, y=110, width=137, height=30)
 
         max_coll = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=18)
         max_coll["font"] = ft
         max_coll["fg"] = "#333333"
         max_coll["justify"] = "center"
-        max_coll["text"] = "max_collateral"
-        max_coll.place(x=440, y=140, width=70, height=25)
+        max_coll["text"] = maxscore_collateral
+        max_coll.place(x=410, y=140, width=70, height=25)
 
         max_condi = tk.Label(loan)
         ft = tkFont.Font(family='Times', size=18)
         max_condi["font"] = ft
         max_condi["fg"] = "#333333"
         max_condi["justify"] = "center"
-        max_condi["text"] = "max_condition"
-        max_condi.place(x=440, y=170, width=70, height=25)
+        max_condi["text"] = maxscore_condition
+        max_condi.place(x=410, y=170, width=70, height=25)
 
 
 
@@ -410,7 +568,7 @@ root.mainloop()
 # # #Backup
 # # Run program
 # character = character_var.get()
-#         capability = capability_var.get()
+# capability = capability_var.get()
 #         capital = capital_var.get()
 #         collateral = collateral_var.get()
 #         condition = condition_var.get()
