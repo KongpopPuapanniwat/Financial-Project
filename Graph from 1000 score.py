@@ -19,3 +19,4 @@ plt.grid(True)
 plt.tight_layout()
 plt.legend()
 plt.show()
+r
