@@ -1,3 +1,3 @@
 Username,repayment_history,region_info,job_info,social_status,health_info,revenue,loan,rate,year,job_year,pay_other_debt,debt,asset,collateral_asset,liquidity_collateral,percent_inflation
-Tom,เคยค้างในอดีต ปิดบัญชี,Middle,Employee,Upper-middle,Good health,15000,50000,1.2,5,5,3000,30000,100000,80000,High,6
+Tom,เคยค้างในอดีต ปิดบัญชี,Middle,Employee,Upper-middle,Good health,15000,50000,1.2,5,5,3000,30000,100000,100000,High,3
 John,ค้างชำระ,East,Agricultural business,Lower-middle,Serious disease,9000,50000,1.2,5,2,3000,20000,50000,30000,Low,3

@@ -11,7 +11,7 @@ def repayment(credit_buro_score,repayment_history): #refered by credit Buro
         count_repayment = 0.2 * credit_buro_score
     else:
         count_repayment = 9999
-        print('Error Invalid input')
+        print('Error in all def character')
     return count_repayment
 
 
@@ -26,7 +26,7 @@ def region(region_score,region_info):  #refered by Household Debt.
         count_region = 0.25 * region_score
     else:
         count_region = 9999
-        print('Error Invalid input')
+        print('Error in all def character')
     return count_region
 
 
@@ -41,7 +41,7 @@ def job(job_score,job_info):  #reference by trouble liquidity to payback loan
         count_job = 0.4 * job_score
     else:
         count_job = 9999
-        print('Error Invalid input')
+        print('Error in all def character')
     return count_job
 
 
@@ -58,7 +58,7 @@ def social(social_status_score,social_status): #refered by social status which c
         count_social = 0.2 * social_status_score
     else:
         count_social = 9999
-        print('Error Invalid input')
+        print('Error in all def character')
     return count_social
 
 
@@ -80,7 +80,7 @@ def income(income_score,revenue,loan,rate,year):  #refered by income each month 
         count_income = income_score
     else:
         count_income = 9999
-        print('Error Invalid input')
+        print('Error in all def capability')
     return count_income
 
 
@@ -93,7 +93,7 @@ def health(health_score,health_info):  #refered bycapability to payback
         count_health = 0.5 * health_score
     else:
         count_health = 9999
-        print('Error Invalid input')
+        print('Error in all def capability')
     return count_health
 
 
@@ -110,7 +110,7 @@ def job_stability(job_stability_score,job_year):   #refered by stability of inco
         count_job_stability =  0.25 * job_stability_score
     else:
         count_job_stability = 9999
-        print('Error Invalid input')
+        print('Error in all def capability')
     return count_job_stability
 
 
@@ -130,7 +130,7 @@ def having_debt(having_debt_score,pay_other_debt,revenue): #capability to pay ot
         count_having_debt = 0
     else:
         count_having_debt = 9999
-        print('Error Invalid input')
+        print('Error in all def capability')
     return count_having_debt
 
 
@@ -148,7 +148,7 @@ def other_debt(other_debt_score,debt,asset): #proportion of other debt / asset l
         count_other_debt = 0
     else:
         count_other_debt = 9999
-        print('Error Invalid input')
+        print('Error in all def capability')
     return count_other_debt
 
 #debt means other debt
@@ -156,11 +156,11 @@ def capital_structure(capital_score,asset,debt):  #structure of money laoner hav
     capital = asset - debt                       #if other debt more than capital it implied that loaner may cant afford  other debt
     if capital > debt:
         count_capital_structure = capital_score
-    elif capital < debt:
+    elif capital <= debt:
         count_capital_structure = 0.25 * capital_score
     else:
         count_capital_structure = 9999
-        print('Error Invalid input')
+        print('Error in all def capital')
     return count_capital_structure
 
 
@@ -178,7 +178,7 @@ def percent_asset(asset_score,asset,loan): #referenced by proportion of loan / a
         count_percent_asset = 0
     else:
         count_percent_asset = 9999
-        print('Error Invalid input')
+        print('Error in all def capital')
     return count_percent_asset
 
 # refered by proportion of collateral and amount of loan loaner ask and liquidity of collateral asset
@@ -190,13 +190,13 @@ def collateral(maxscore_collateral,collateral_asset,loan,liquidity_collateral):
         elif liquidity_collateral == 'Low':
             count_collateral = 0.8 * maxscore_collateral
 
-    elif 50 > percent_collateral >= 25:
+    elif 50 >= percent_collateral >= 25:
         if liquidity_collateral == 'High':
             count_collateral = 0.75 * maxscore_collateral
         elif liquidity_collateral == 'Low':
             count_collateral = 0.6 * maxscore_collateral
 
-    elif 75 > percent_collateral >= 50:
+    elif 75 > percent_collateral > 50:
         if liquidity_collateral == 'High':
             count_collateral = 0.5 *maxscore_collateral
         elif liquidity_collateral == 'Low':
@@ -212,7 +212,7 @@ def collateral(maxscore_collateral,collateral_asset,loan,liquidity_collateral):
         count_collateral = 0
     else:
         count_collateral = 9999
-        print('Error Invalid input')
+        print('Error in all def collateral')
     return count_collateral
 
 #refered to other condition which not directly related to the borrower
@@ -233,7 +233,6 @@ def condition(maxscore_condition,percent_inflation,job_info):
             count_inflation = 0.6 * maxscore_condition
     else:
         count_inflation = 9999
-        print('Error Invalid input')
+        print('Error in all def condition')
     return count_inflation
 
-    #hello
