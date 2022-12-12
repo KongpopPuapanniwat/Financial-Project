@@ -196,19 +196,19 @@ def collateral(maxscore_collateral,collateral_asset,loan,liquidity_collateral):
         elif liquidity_collateral == 'Low':
             count_collateral = 0.6 * maxscore_collateral
 
-    elif 75 > percent_collateral > 50:
+    elif 85 > percent_collateral > 50:
         if liquidity_collateral == 'High':
             count_collateral = 0.5 *maxscore_collateral
         elif liquidity_collateral == 'Low':
             count_collateral = 0.4 * maxscore_collateral
 
-    elif 100 > percent_collateral >= 75:
+    elif 120 > percent_collateral >= 80:
         if liquidity_collateral == 'High':
             count_collateral = 0.25 * maxscore_collateral
         elif liquidity_collateral == 'Low':
             count_collateral = 0.2 * maxscore_collateral
 
-    elif percent_collateral >= 100:
+    elif percent_collateral >= 120:
         count_collateral = 0
     else:
         count_collateral = 9999
