@@ -214,7 +214,7 @@ class App:
             final["fg"] = "#333333"
             final["justify"] = "center"
             final["text"] = 'Summary'
-            final.place(x=15, y=5, width=150, height=50)
+            final.place(x=15, y=5, width=150, height=30)
 
             line_user1 = tk.Label(loan)
             ft = tkFont.Font(family='Times', size=35)
@@ -335,6 +335,13 @@ alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenhei
 root.geometry(alignstr)
 root.resizable(width=False, height=False)
 
+#defind image
+bg = tk.PhotoImage(file='D:\FinancialProject\Financial-Project\Background financial.png')
+
+#create label
+my_label =tk.Label(root,image=bg)
+my_label.place(x=0,y=0,relwidth=1,relheight=1)
+
 scroll = []
 user_list = []
 user1 = ''
@@ -400,7 +407,8 @@ list = []
 GLabel_221 = tk.Label(root)                                     # Input proportion of each C
 ft = tkFont.Font(family='Times', size=18)
 GLabel_221["font"] = ft
-GLabel_221["fg"] = "#333333"
+GLabel_221["fg"] = "#fcfcfc"
+GLabel_221["bg"] = "#0B0B42"
 GLabel_221["justify"] = "center"
 GLabel_221["text"] = "Input proportion of each C"
 GLabel_221.place(x=20, y=50, width=270, height=30)
@@ -408,19 +416,20 @@ GLabel_221.place(x=20, y=50, width=270, height=30)
 GLabel_430 = tk.Label(root)                                      # Risk lending assessment program
 ft = tkFont.Font(family='Times', size=28)
 GLabel_430["font"] = ft
-GLabel_430["fg"] = "#333333"
+GLabel_430["fg"] = "#fcfcfc"
+GLabel_430["bg"] = "#0B0B42"
 GLabel_430["justify"] = "center"
 GLabel_430["text"] = "Risk lending assessment program"
-GLabel_430.place(x=50, y=10, width=511, height=30)
+GLabel_430.place(x=50, y=10, width=511, height=40)
 
 GLabel_810 = tk.Label(root)                                      # Character
 GLabel_810["bg"] = "#01aaed"
 ft = tkFont.Font(family='Times', size=9)
 GLabel_810["font"] = ft
-GLabel_810["fg"] = "#333333"
+GLabel_810["fg"] = "#fcfcfc"
 GLabel_810["justify"] = "center"
 GLabel_810["text"] = "Character"
-GLabel_810.place(x=60, y=80, width=58, height=30)
+GLabel_810.place(x=60, y=95, width=58, height=30)
 
 character = tk.IntVar()                                         # Entry Character
 character_var = tk.Entry(root,textvariable=character)
@@ -429,7 +438,7 @@ ft = tkFont.Font(family='Times', size=10)
 character_var["font"] = ft
 character_var["fg"] = "#333333"
 character_var["justify"] = "center"
-character_var.place(x=10, y=80, width=52, height=30)
+character_var.place(x=10, y=95, width=52, height=30)
 
 capability = tk.IntVar()                                        # Entry Capability
 capability_var = tk.Entry(root,textvariable = capability)
@@ -438,16 +447,16 @@ ft = tkFont.Font(family='Times', size=10)
 capability_var["font"] = ft
 capability_var["fg"] = "#333333"
 capability_var["justify"] = "center"
-capability_var.place(x=130, y=80, width=49, height=30)
+capability_var.place(x=130, y=95, width=49, height=30)
 
 GLabel_99 = tk.Label(root)                                      # capability
 GLabel_99["bg"] = "#01aaed"
 ft = tkFont.Font(family='Times', size=9)
 GLabel_99["font"] = ft
-GLabel_99["fg"] = "#333333"
+GLabel_99["fg"] = "#fcfcfc"
 GLabel_99["justify"] = "center"
 GLabel_99["text"] = "Capability"
-GLabel_99.place(x=180, y=80, width=55, height=30)
+GLabel_99.place(x=180, y=95, width=55, height=30)
 
 capital = tk.IntVar()                                           # Entry capital
 capital_var = tk.Entry(root,textvariable = capital)
@@ -456,16 +465,16 @@ ft = tkFont.Font(family='Times', size=10)
 capital_var["font"] = ft
 capital_var["fg"] = "#333333"
 capital_var["justify"] = "center"
-capital_var.place(x=250, y=80, width=51, height=30)
+capital_var.place(x=250, y=95, width=51, height=30)
 
 GLabel_739 = tk.Label(root)                                     # Capital
 GLabel_739["bg"] = "#01aaed"
 ft = tkFont.Font(family='Times', size=9)
 GLabel_739["font"] = ft
-GLabel_739["fg"] = "#333333"
+GLabel_739["fg"] = "#fcfcfc"
 GLabel_739["justify"] = "center"
 GLabel_739["text"] = "Capital"
-GLabel_739.place(x=300, y=80, width=50, height=30)
+GLabel_739.place(x=300, y=95, width=50, height=30)
 
 collateral = tk.IntVar()                                      # Entry Collateral
 collateral_var = tk.Entry(root,textvariable = collateral)
@@ -474,16 +483,16 @@ ft = tkFont.Font(family='Times', size=10)
 collateral_var["font"] = ft
 collateral_var["fg"] = "#333333"
 collateral_var["justify"] = "center"
-collateral_var.place(x=360, y=80, width=51, height=30)
+collateral_var.place(x=360, y=95, width=51, height=30)
 
 GLabel_932 = tk.Label(root)                                   # Collateral
 GLabel_932["bg"] = "#01aaed"
 ft = tkFont.Font(family='Times', size=9)
 GLabel_932["font"] = ft
-GLabel_932["fg"] = "#333333"
+GLabel_932["fg"] = "#fcfcfc"
 GLabel_932["justify"] = "center"
 GLabel_932["text"] = "Collateral"
-GLabel_932.place(x=410, y=80, width=62, height=30)
+GLabel_932.place(x=410, y=95, width=62, height=30)
 
 condition = tk.IntVar()                                       # Entry Condition
 condition_var = tk.Entry(root,textvariable = condition)
@@ -492,24 +501,25 @@ ft = tkFont.Font(family='Times', size=10)
 condition_var["font"] = ft
 condition_var["fg"] = "#333333"
 condition_var["justify"] = "center"
-condition_var.place(x=480, y=80, width=50, height=30)
+condition_var.place(x=480, y=95, width=50, height=30)
 
 GLabel_666 = tk.Label(root)                                     # Condition
 GLabel_666["bg"] = "#01aaed"
 ft = tkFont.Font(family='Times', size=9)
 GLabel_666["font"] = ft
-GLabel_666["fg"] = "#333333"
+GLabel_666["fg"] = "#fcfcfc"
 GLabel_666["justify"] = "center"
 GLabel_666["text"] = "Condition"
-GLabel_666.place(x=530, y=80, width=55, height=30)
+GLabel_666.place(x=530, y=95, width=55, height=30)
 
 GLabel_118 = tk.Label(root)                                     # Label sub C
 ft = tkFont.Font(family='Times', size=16)
 GLabel_118["font"] = ft
-GLabel_118["fg"] = "#333333"
+GLabel_118["fg"] = "#fcfcfc"
+GLabel_118["bg"] = "#0B0B42"
 GLabel_118["justify"] = "center"
 GLabel_118["text"] = "Proportion of sub C & Cut-off"
-GLabel_118.place(x=0, y=130, width=300, height=30)
+GLabel_118.place(x=20, y=145, width=270, height=30)
 
 text_file_sub_c = tk.StringVar()
 sub_c_var = tk.Entry(root,textvariable=text_file_sub_c)         # Entry sub c and Cut-off
@@ -518,26 +528,27 @@ ft = tkFont.Font(family='Times', size=18)
 sub_c_var["font"] = ft
 sub_c_var["fg"] = "#333333"
 sub_c_var["justify"] = "center"
-sub_c_var.place(x=30, y=160, width=175, height=25)
+sub_c_var.place(x=30, y=180, width=180, height=25)
 
 GLabel_692 = tk.Label(root)                                     # Label textfile sub c and Cut-off
 GLabel_692["bg"] = "#c71585"
 ft = tkFont.Font(family='Times', size=18)
 GLabel_692["font"] = ft
-GLabel_692["fg"] = "#333333"
+GLabel_692["fg"] = "#fcfcfc"
 GLabel_692["justify"] = "center"
 GLabel_692["text"] = "text file"
-GLabel_692.place(x=200, y=160, width=85, height=25)
+GLabel_692.place(x=200, y=180, width=85, height=25)
 
 
 
 GLabel_865 = tk.Label(root)                                     # Label Input loan info
 ft = tkFont.Font(family='Times', size=18)
 GLabel_865["font"] = ft
-GLabel_865["fg"] = "#333333"
+GLabel_865["fg"] = "#fcfcfc"
+GLabel_865["bg"] = "#0B0B42"
 GLabel_865["justify"] = "center"
 GLabel_865["text"] = "Input loaner info"
-GLabel_865.place(x=320, y=130, width=160, height=30)
+GLabel_865.place(x=320, y=145, width=180, height=30)
 
 csv_loan_info = tk.StringVar()                                  # Entry loan info
 loan_info_var = tk.Entry(root,textvariable= csv_loan_info)
@@ -546,42 +557,44 @@ ft = tkFont.Font(family='Times', size=18)
 loan_info_var["font"] = ft
 loan_info_var["fg"] = "#333333"
 loan_info_var["justify"] = "center"
-loan_info_var.place(x=320, y=160, width=175, height=25)
+loan_info_var.place(x=320, y=180, width=180, height=25)
 
 GLabel_307 = tk.Button(root,command=read_csv)                   # Button to input csv loan info
 GLabel_307["bg"] = "#cc0000"
 ft = tkFont.Font(family='Times', size=18)
 GLabel_307["font"] = ft
-GLabel_307["fg"] = "#333333"
+GLabel_307["fg"] = "#fcfcfc"
 GLabel_307["justify"] = "center"
 GLabel_307["text"] = "csv file"
-GLabel_307.place(x=495, y=160, width=75, height=25)
+GLabel_307.place(x=495, y=180, width=75, height=25)
 
-user1 = tk.Label(root)                                          # Label pick User 1
+user_1 = tk.Label(root)                                          # Label pick User 1
 ft = tkFont.Font(family='Times', size=21)
-user1["font"] = ft
-user1["fg"] = "#333333"
-user1["justify"] = "center"
-user1["text"] = "Pick user1 "
-user1.place(x=30, y=220, width=130, height=30)
+user_1["font"] = ft
+user_1["fg"] = "#fcfcfc"
+user_1["bg"] = "#0B0B42"
+user_1["justify"] = "center"
+user_1["text"] = "Pick user1 "
+user_1.place(x=30, y=230, width=130, height=30)
 
-user2 = tk.Label(root)                                          # Lebal pick User2
+user_2 = tk.Label(root)                                          # Lebal pick User2
 ft = tkFont.Font(family='Times', size=21)
-user2["font"] = ft
-user2["fg"] = "#333333"
-user2["justify"] = "center"
-user2["text"] = "Pick user2 "
-user2.place(x=295, y=220, width=130 ,height=30)
+user_2["font"] = ft
+user_2["fg"] = "#fcfcfc"
+user_2["bg"] = "#0B0B42"
+user_2["justify"] = "center"
+user_2["text"] = "Pick user2 "
+user_2.place(x=295, y=230, width=130 ,height=30)
 
 
 submit = tk.Radiobutton(root,command= App)                      # Submit all info
 submit["bg"] = "#cc0000"
 ft = tkFont.Font(family='Times', size=30)
 submit["font"] = ft
-submit["fg"] = "#333333"
+submit["fg"] = "#fcfcfc"
 submit["justify"] = "center"
 submit["text"] = "Submit"
-submit.place(x=200,y=375,width=200,height=50)
+submit.place(x=200,y=385,width=200,height=50)
 
 
 root.mainloop()
